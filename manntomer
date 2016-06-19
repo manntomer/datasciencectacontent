@@ -1,0 +1,30 @@
+#solution assignment 2:
+makeCacheMatrix<-function(mt=matrix()){
+  inv<-NULL
+  get<-function() mt
+  set<-function(y){
+    mt<<-y
+    inv<<-NULL
+  }
+  getinvrse<-function () inv
+  setinvrse<-function(invrse){
+    inv<<-invrse
+  }
+  list(get=get,set=set,getinvrse=getinvrse,setinvrse=setinvrse)
+}
+
+
+cacheSolve<-function(mt,...){
+  inv<-mt$getinvrse()
+  if(!is.null(inv)){
+    print ("getting inverse matrix from cache")
+    return(inv)
+  } 
+  data<-mt$get()
+  inv<-solve(data)
+  mt$setinvrse(inv)
+  inv
+}
+
+my_matfunc<-makeCacheMatrix(test_matrix)   #use me like this
+cacheSolve(my_matfunc)
